@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="data:," />
+    <title>Muse はじめ方ガイド</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #f6f6f4;
+        --surface: #ffffff;
+        --surface-2: #efefec;
+        --ink: #1b1b1f;
+        --sub: #5a5a64;
+        --faint: #8a8a94;
+        --border: #e3e1dc;
+        --accent: #c92464;
+        --accent-ink: #a81c52;
+        --accent-soft: #fbe9f1;
+        --good: #17724a;
+        --good-soft: #e6f4ec;
+        --warn: #8a5a12;
+        --warn-soft: #faf1dc;
+        --radius: 14px;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #131316;
+          --surface: #1e1e23;
+          --surface-2: #26262d;
+          --ink: #f2f2f4;
+          --sub: #b3b3bf;
+          --faint: #83838f;
+          --border: #34343d;
+          --accent: #ef6ba6;
+          --accent-ink: #f58ab9;
+          --accent-soft: #3a2230;
+          --good: #5cc48d;
+          --good-soft: #1d3228;
+          --warn: #e8b34b;
+          --warn-soft: #332a16;
+        }
+      }
+      * { box-sizing: border-box; }
+      html { -webkit-text-size-adjust: 100%; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+        font-size: 16px;
+        line-height: 1.75;
+      }
+      main { max-width: 680px; margin: 0 auto; padding: 28px 18px 56px; }
+      button, [role="button"], select, summary, input:not([type="checkbox"], [type="radio"]) { min-height: 2rem; }
+
+      .kit-label {
+        display: inline-block;
+        font-size: 13px; font-weight: 700; color: var(--accent-ink);
+        background: var(--accent-soft); border-radius: 999px;
+        padding: 4px 12px; margin-bottom: 14px;
+      }
+      h1 { font-size: 27px; line-height: 1.45; font-weight: 900; margin: 0 0 12px; letter-spacing: .01em; }
+      h2 { font-size: 20px; font-weight: 900; margin: 0 0 6px; line-height: 1.5; }
+      h3 { font-size: 16px; font-weight: 700; margin: 0 0 4px; }
+      p { margin: 0 0 12px; }
+      a { color: var(--accent-ink); }
+      .lead { color: var(--sub); font-size: 15.5px; }
+      .lead strong { color: var(--ink); }
+
+      /* roadmap */
+      .roadmap { display: flex; gap: 0; margin: 22px 0 6px; }
+      .rm { flex: 1; text-align: center; position: relative; padding: 0 4px; }
+      .rm + .rm::before {
+        content: ""; position: absolute; left: -22%; top: 17px;
+        width: 44%; border-top: 2px dashed var(--border);
+      }
+      .rm .dot {
+        width: 34px; height: 34px; margin: 0 auto 6px; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        font-weight: 900; font-size: 14px;
+        background: var(--surface); border: 2px solid var(--border); color: var(--faint);
+        position: relative; z-index: 1;
+      }
+      .rm.now .dot { background: var(--accent); border-color: var(--accent); color: #fff; }
+      @media (prefers-color-scheme: dark) { .rm.now .dot { color: #1b0d14; } }
+      .rm .t { font-size: 13px; font-weight: 700; line-height: 1.4; }
+      .rm .s { font-size: 11.5px; color: var(--faint); line-height: 1.4; }
+      .rm.now .t { color: var(--accent-ink); }
+
+      .goal {
+        margin-top: 18px;
+        background: var(--good-soft); border-radius: var(--radius);
+        padding: 14px 18px; font-size: 15px;
+      }
+      .goal .gt { font-weight: 900; color: var(--good); display: block; font-size: 13px; margin-bottom: 2px; }
+
+      .sec { margin-top: 44px; }
+      .sec-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 14px; }
+      .sec-num {
+        flex: none; width: 30px; height: 30px; border-radius: 50%;
+        background: var(--accent); color: #fff; font-weight: 900; font-size: 15px;
+        display: inline-flex; align-items: center; justify-content: center;
+        transform: translateY(4px);
+      }
+      @media (prefers-color-scheme: dark) { .sec-num { color: #1b0d14; } }
+      .sec-head h2 { flex: 1; }
+      .sec-sub { color: var(--sub); font-size: 14.5px; margin: 0 0 14px; }
+
+      .card {
+        background: var(--surface); border: 1px solid var(--border);
+        border-radius: var(--radius); padding: 18px;
+      }
+      .card + .card { margin-top: 12px; }
+
+      /* chat mock */
+      .chat { display: flex; flex-direction: column; gap: 10px; margin-top: 6px; }
+      .msg { max-width: 88%; padding: 10px 14px; border-radius: 14px; font-size: 14.5px; line-height: 1.6; }
+      .msg.me { align-self: flex-end; background: var(--accent); color: #fff; border-bottom-right-radius: 4px; }
+      @media (prefers-color-scheme: dark) { .msg.me { color: #1b0d14; } }
+      .msg.ai { align-self: flex-start; background: var(--surface-2); border-bottom-left-radius: 4px; }
+      .msg .who { display: block; font-size: 11.5px; font-weight: 700; opacity: .75; margin-bottom: 2px; }
+
+      /* need / noneed */
+      .cols { display: grid; grid-template-columns: 1fr; gap: 12px; }
+      @media (min-width: 560px) { .cols { grid-template-columns: 1fr 1fr; } }
+      .list { list-style: none; margin: 0; padding: 0; }
+      .list li { display: flex; gap: 10px; padding: 9px 0; font-size: 15px; align-items: flex-start; }
+      .list li + li { border-top: 1px solid var(--border); }
+      .list li:first-child { padding-top: 2px; }
+      .list li:last-child { padding-bottom: 2px; }
+      .mark { flex: none; font-weight: 900; width: 20px; text-align: center; }
+      .mark.ok { color: var(--good); }
+      .mark.no { color: var(--faint); }
+      .list .sub { display: block; color: var(--sub); font-size: 13.5px; }
+
+      /* steps */
+      .step { display: flex; gap: 14px; padding: 14px 0; }
+      .step + .step { border-top: 1px solid var(--border); }
+      .step:first-child { padding-top: 2px; }
+      .step:last-child { padding-bottom: 2px; }
+      .step-n {
+        flex: none; width: 26px; height: 26px; margin-top: 3px; border-radius: 50%;
+        border: 2px solid var(--accent); color: var(--accent-ink);
+        font-weight: 900; font-size: 14px; display: flex; align-items: center; justify-content: center;
+      }
+      .step-body { flex: 1; min-width: 0; }
+      .step-body p { color: var(--sub); font-size: 14.5px; margin: 0; }
+      .try {
+        margin-top: 10px; background: var(--surface-2); border-radius: 10px;
+        padding: 10px 14px; font-size: 14.5px; font-weight: 500;
+      }
+      .try span { color: var(--faint); font-size: 12.5px; display: block; font-weight: 400; }
+
+      .safe {
+        margin-top: 12px;
+        background: var(--warn-soft); border-radius: var(--radius);
+        padding: 14px 18px; font-size: 14.5px;
+      }
+      .safe .st { font-weight: 900; color: var(--warn); display: block; font-size: 13px; margin-bottom: 2px; }
+      .safe p { margin: 0; }
+
+      /* checklist (display only) */
+      .check { list-style: none; margin: 0; padding: 0; }
+      .check li { display: flex; gap: 12px; padding: 11px 0; font-size: 15px; align-items: flex-start; }
+      .check li + li { border-top: 1px solid var(--border); }
+      .check li:first-child { padding-top: 2px; }
+      .check li:last-child { padding-bottom: 2px; }
+      .box {
+        flex: none; width: 22px; height: 22px; margin-top: 3px; border-radius: 6px;
+        border: 2px solid var(--border); background: var(--surface-2);
+      }
+
+      /* trouble */
+      .trouble { padding: 13px 0; }
+      .trouble + .trouble { border-top: 1px solid var(--border); }
+      .trouble:first-child { padding-top: 2px; }
+      .trouble:last-child { padding-bottom: 2px; }
+      .trouble h3 { font-size: 15px; }
+      .trouble p { margin: 0; color: var(--sub); font-size: 14.5px; }
+
+      /* next routes */
+      .route { padding: 20px 18px; }
+      .route .rtag {
+        display: inline-block; font-size: 12.5px; font-weight: 900;
+        border-radius: 999px; padding: 3px 11px; margin-bottom: 10px;
+      }
+      .route.a .rtag { background: var(--accent-soft); color: var(--accent-ink); }
+      .route.b { border: 1.5px solid var(--accent); }
+      .route.b .rtag { background: var(--accent); color: #fff; }
+      @media (prefers-color-scheme: dark) { .route.b .rtag { color: #1b0d14; } }
+      .route p { color: var(--sub); font-size: 14.5px; }
+      .btn {
+        display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+        width: 100%; min-height: 52px; padding: 12px 18px; margin-top: 6px;
+        border: none; border-radius: 12px; cursor: pointer; text-decoration: none;
+        background: var(--accent); color: #fff; font: inherit; font-weight: 700; font-size: 16px;
+      }
+      .btn:active { opacity: .85; }
+      @media (prefers-color-scheme: dark) { .btn { color: #1b0d14; } }
+      .btn.ghost {
+        background: var(--surface); color: var(--accent-ink);
+        border: 1.5px solid var(--accent);
+      }
+      .paste {
+        width: 100%; font: inherit; font-size: 14.5px; line-height: 1.65;
+        color: var(--ink); background: var(--surface-2);
+        border: 1.5px solid var(--border); border-radius: 10px;
+        padding: 12px 14px; resize: none; margin-top: 4px;
+      }
+      .paste:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: transparent; }
+      .copied { color: var(--good); font-size: 13.5px; font-weight: 700; margin-top: 8px; min-height: 1.4em; }
+      .steps-mini { list-style: none; counter-reset: sm; margin: 12px 0 0; padding: 0; }
+      .steps-mini li {
+        counter-increment: sm; display: flex; gap: 10px;
+        padding: 6px 0; font-size: 14.5px; color: var(--sub);
+      }
+      .steps-mini li::before {
+        content: counter(sm); flex: none; width: 22px; height: 22px; margin-top: 2px;
+        border-radius: 50%; background: var(--surface-2); color: var(--ink);
+        font-size: 12.5px; font-weight: 900; display: flex; align-items: center; justify-content: center;
+      }
+
+      footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--border); color: var(--faint); font-size: 13px; }
+      footer p { margin: 0 0 6px; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <span class="kit-label">資料 1 ／ Instagram 数値チェック キット</span>
+      <h1>まずは Muse に<br />登録するだけです</h1>
+      <p class="lead">
+        Muse は、スマホで<strong>会話するだけで調べものや表づくりを頼める AI アシスタント</strong>です。
+        このページでは<strong>登録の完了まで</strong>を案内します。パソコンも、特別な道具も、開発もいりません。
+        チャットで返事が返ってきたら、このページは終わりです。
+      </p>
+
+      <div class="roadmap" aria-label="進み方">
+        <div class="rm now">
+          <div class="dot">1</div>
+          <div class="t">Muse に登録</div>
+          <div class="s">このページ</div>
+        </div>
+        <div class="rm">
+          <div class="dot">2</div>
+          <div class="t">Instagram と接続</div>
+          <div class="s">資料 2 のガイド</div>
+        </div>
+        <div class="rm">
+          <div class="dot">3</div>
+          <div class="t">見た目を選ぶ</div>
+          <div class="s">資料 3 テンプレート</div>
+        </div>
+      </div>
+
+      <div class="goal">
+        <span class="gt">今日のゴール</span>
+        Muse のチャット画面が開いて、試しの一言に返事が返ってくれば完了です。Instagram の接続や、見たいアカウントの指定は、そのあとのステップでやります。
+      </div>
+
+      <!-- 1. Museとは -->
+      <section class="sec">
+        <div class="sec-head"><span class="sec-num">1</span><h2>Muse とは</h2></div>
+        <p class="sec-sub">むずかしい設定をする道具ではなく、「お願い」を文章で送る相手です。</p>
+        <div class="card">
+          <div class="chat" aria-label="会話のイメージ">
+            <div class="msg me"><span class="who">あなた</span>@instagram のフォロワー数を教えて</div>
+            <div class="msg ai"><span class="who">Muse</span>フォロワー数は 6億8,504万です（取得時点の公開情報）。投稿数と直近の投稿の反応も並べますか？</div>
+            <div class="msg me"><span class="who">あなた</span>うん。あと、昨日からの増減も見たい</div>
+            <div class="msg ai"><span class="who">Muse</span>わかりました。日ごとに数値を貯めて、前日との差が分かる形で並べます。</div>
+          </div>
+          <p style="margin-top:14px; color:var(--sub); font-size:14.5px; margin-bottom:0;">
+            こんなふうに、ふだんの言葉で頼むだけです。このキットでは、他社・公開アカウントのフォロワー数や投稿への反応（いいね数・コメント数）を Muse に集めてもらい、スマホで見やすい形に並べてもらいます。
+          </p>
+        </div>
+      </section>
+
+      <!-- 2. 準備 -->
+      <section class="sec">
+        <div class="sec-head"><span class="sec-num">2</span><h2>用意するもの</h2></div>
+        <p class="sec-sub">登録に必要なのは、いつも使っているスマホとメールアドレスだけです。</p>
+        <div class="cols">
+          <div class="card">
+            <h3>必要なもの</h3>
+            <ul class="list">
+              <li><span class="mark ok">✓</span><span>スマートフォン<span class="sub">アプリでも、ブラウザでも使えます</span></span></li>
+              <li><span class="mark ok">✓</span><span>メールアドレス<span class="sub">確認コードや案内が届くもの。Google / Apple のアカウントで進める形になる場合もあります</span></span></li>
+              <li><span class="mark ok">✓</span><span>10 分ほどの時間<span class="sub">途中でやめて、あとから続きを開いても大丈夫です</span></span></li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>いらないもの</h3>
+            <ul class="list">
+              <li><span class="mark no">―</span><span>パソコン</span></li>
+              <li><span class="mark no">―</span><span>Meta 公式 API の申請やトークン</span></li>
+              <li><span class="mark no">―</span><span>プログラムや開発の知識</span></li>
+              <li><span class="mark no">―</span><span>他人のアカウントや認証情報<span class="sub">登録も連携も、必ずご自身のものを使います</span></span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. 登録手順 -->
+      <section class="sec">
+        <div class="sec-head"><span class="sec-num">3</span><h2>登録の手順</h2></div>
+        <p class="sec-sub">画面の文言は変わることがあるので、細かいボタン名は画面の案内どおりに進めてください。大まかな流れはこの 4 つです。</p>
+        <div class="card">
+          <div class="step">
+            <div class="step-n">1</div>
+            <div class="step-body">
+              <h3>Muse を開く</h3>
+              <p>スマホのアプリストアで「Muse」を検索してアプリを入れるか、ブラウザで Muse のページを開きます。似た名前のアプリもあるので、案内された入口から開くのが確実です。</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-n">2</div>
+            <div class="step-body">
+              <h3>新規登録を選ぶ</h3>
+              <p>「登録」「はじめる」といったボタンを押し、画面に出る方法（メールアドレス／Google／Apple など）から、自分が続けやすいものを 1 つ選びます。名前などの入力が求められたら、そのまま入力します。</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-n">3</div>
+            <div class="step-body">
+              <h3>本人確認をして、ログインする</h3>
+              <p>メールなどに届いた確認コードを入力する、といった確認が入ることがあります。届いたコードは、その画面にだけ入力してください。終わったら、登録した方法でログインできているか確認します。</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-n">4</div>
+            <div class="step-body">
+              <h3>試しに一言送る</h3>
+              <p>チャット画面が開いたら、試しに送ってみてください。返事が返ってくれば、登録は完了です。</p>
+              <div class="try"><span>試し文の例</span>こんにちは。はじめて使います。</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="safe" role="note">
+          <span class="st">安全のために</span>
+          <p>パスワードと確認コードは、<strong>誰にも渡さない</strong>でください。Muse のチャットに送る必要もありません。登録や確認は、公式の画面の中だけで行います。分からない表示が出たら、無理に進めず、その画面の文言をそのまま Muse や詳しい人に聞くのが安全です。</p>
+        </div>
+
+        <div class="card" style="margin-top:12px;">
+          <h3>完了チェック</h3>
+          <ul class="check">
+            <li><span class="box" aria-hidden="true"></span><span>Muse のチャット画面が開ける</span></li>
+            <li><span class="box" aria-hidden="true"></span><span>試しの一言を送ると、返事が返ってくる</span></li>
+            <li><span class="box" aria-hidden="true"></span><span>次回も同じ方法でログインできる（登録に使った方法を覚えている）</span></li>
+          </ul>
+          <p style="margin:10px 0 0; color:var(--sub); font-size:14.5px;">3 つとも当てはまれば、このページは終わりです。下の「次へ」へ進んでください。</p>
+        </div>
+      </section>
+
+      <!-- 4. つまずき -->
+      <section class="sec">
+        <div class="sec-head"><span class="sec-num">4</span><h2>つまずいたとき</h2></div>
+        <p class="sec-sub">よくある 4 つだけ挙げます。焦らず、上から順に確認してください。</p>
+        <div class="card">
+          <div class="trouble">
+            <h3>確認コードが届かない</h3>
+            <p>迷惑メールフォルダを確認し、数分待ってから「再送」を押します。メールアドレスの入力間違いも多いので、1 文字ずつ見直してください。</p>
+          </div>
+          <div class="trouble">
+            <h3>ログインできない</h3>
+            <p>登録したときと<strong>同じ方法</strong>で入っているか確認します（メールで登録したのに Google で入ろうとする、などが多いケースです）。パスワードを何度も間違えたら、少し時間を置いてから再設定の案内を使います。</p>
+          </div>
+          <div class="trouble">
+            <h3>登録の画面が見つからない</h3>
+            <p>すでにログイン済みの画面が開いていることがあります。その場合は登録は済んでいるので、手順 4 の「試しに一言送る」だけやってみてください。</p>
+          </div>
+          <div class="trouble">
+            <h3>画面の言葉が分からない</h3>
+            <p>その表示を無理に押さず、文言をそのままメモして、次のステップで Muse に「この表示はどういう意味ですか」と聞くのが確実です。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. 次へ -->
+      <section class="sec">
+        <div class="sec-head"><span class="sec-num">5</span><h2>登録できたら、次へ</h2></div>
+        <p class="sec-sub">進み方は 2 通りあります。どちらでも行き着く先は同じです。</p>
+
+        <div class="card route a">
+          <span class="rtag">進め方 A ― ガイドを見ながら進める</span>
+          <h3>資料 2「数値チェックガイド」を開く</h3>
+          <p>Instagram との接続と、見たいアカウントの伝え方を、画面の見本つきで順番に案内しています。自分のペースで 1 つずつ進めたい方はこちらです。</p>
+          <a class="btn ghost" href="https://kentsoda.github.io/instagram-check-kit/02_instagram_guide.html">資料 2 のガイドを開く →</a>
+        </div>
+
+        <div class="card route b">
+          <span class="rtag">進め方 B ― めんどくさい人向け</span>
+          <h3>下の文をコピーして、Muse のチャットに貼るだけ</h3>
+          <p>ガイドを読む代わりに、登録した Muse のチャットへこの 2 行を貼って送ってください。あとは Muse が順番に案内します（初回は Instagram の連携と、見たいアカウントを伝えるところまでです）。</p>
+          <textarea class="paste" id="pasteText" rows="3" readonly>このリポジトリを読んで、設定方法を教えてください。
+https://github.com/kentsoda/instagram-check-kit</textarea>
+          <button class="btn" id="copyBtn" type="button">この文をコピーする</button>
+          <p class="copied" id="copyMsg" role="status" aria-live="polite"></p>
+          <ol class="steps-mini">
+            <li>上のボタンで文をコピーする</li>
+            <li>Muse のチャット画面を開く</li>
+            <li>貼り付けて送信する ― あとは Muse の案内どおりに答えるだけです</li>
+          </ol>
+        </div>
+
+        <p style="margin-top:14px; color:var(--sub); font-size:14.5px;">
+          うまく読み込めないときは、資料一式の置き場所
+          <a href="https://github.com/kentsoda/instagram-check-kit">GitHub のリポジトリ</a>
+          を開いて、そこから資料 2 のガイドに進んでください。
+        </p>
+      </section>
+
+      <footer>
+        <p>資料 1 ／ Muse はじめ方ガイド ― Instagram 数値チェック キット</p>
+        <p>このページは Muse への登録までです。Instagram の接続と対象アカウントの指定は、資料 2 のガイド、または Muse のチャットへの貼り付けで進めます。</p>
+      </footer>
+    </main>
+
+    <script>
+      (function () {
+        var btn = document.getElementById('copyBtn');
+        var msg = document.getElementById('copyMsg');
+        var text = document.getElementById('pasteText');
+        function done() {
+          msg.textContent = 'コピーしました。Muse のチャットに貼り付けて送信してください。';
+          btn.textContent = 'コピーしました ✓';
+          setTimeout(function () {
+            btn.textContent = 'この文をコピーする';
+          }, 2600);
+        }
+        function fallback() {
+          text.focus();
+          text.select();
+          try {
+            document.execCommand('copy');
+            done();
+          } catch (e) {
+            msg.textContent = '長押しで文を選択して、コピーしてください。';
+          }
+        }
+        btn.addEventListener('click', function () {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text.value).then(done, fallback);
+          } else {
+            fallback();
+          }
+        });
+        text.addEventListener('click', function () { text.select(); });
+      })();
+    </script>
+  </body>
+</html>

@@ -8,7 +8,7 @@ AIアシスタント「Muse」を使う前提で、**特別な開発・API申請
 ## 進め方はこれだけです
 
 ### 手順 1 ― まず Muse に登録する
-📄 [01_muse_getting_started.pdf](01_muse_getting_started.pdf) を開いて、その通りに登録してください。
+📄 [01_muse_getting_started.html](https://kentsoda.github.io/instagram-check-kit/01_muse_getting_started.html) を開いて、その通りに登録してください。
 **初日は登録が終わればOKです。**
 
 ### 手順 2 ― 登録できたら、Muse のチャットにこのリポジトリの URL を貼って、こう送る
@@ -28,13 +28,14 @@ https://github.com/kentsoda/instagram-check-kit
 
 | ファイル | 内容 | いつ見る |
 |---|---|---|
-| [01_muse_getting_started.pdf](01_muse_getting_started.pdf) | **資料1**：Museの簡単な説明と登録方法 | 最初に1回 |
+| [01_muse_getting_started.html](https://kentsoda.github.io/instagram-check-kit/01_muse_getting_started.html) | **資料1**：Museの簡単な説明と登録方法 | 最初に1回 |
 | [02_instagram_guide.html](https://kentsoda.github.io/instagram-check-kit/02_instagram_guide.html) ／ [PDF版](02_instagram_guide.pdf) | **資料2**：数値チェックのはじめ方ガイド（スマホ用） | 登録後、設定しながら |
 | [03_numbers_template.html](https://kentsoda.github.io/instagram-check-kit/03_numbers_template.html) | **資料3**：実際の数値ページのテンプレート（デザイン3パターン切替・数値はサンプル） | 見た目を選ぶとき |
 | [04_spec_for_muse.md](04_spec_for_muse.md) | **資料4**：Muse に読ませる仕様書 兼 指示書 v2 | Muse が読むもの（人は読まなくてOK） |
 | この README | 入口と、Muse への指示 | ― |
 
 スマホで読む用の Web 版（GitHub Pages）：
+- 資料1（Muse登録）： https://kentsoda.github.io/instagram-check-kit/01_muse_getting_started.html
 - ガイド： https://kentsoda.github.io/instagram-check-kit/02_instagram_guide.html
 - テンプレート： https://kentsoda.github.io/instagram-check-kit/03_numbers_template.html
 
