@@ -5,7 +5,7 @@ AIアシスタント「Muse」を使う前提で、**特別な開発・API申請
 
 ---
 
-## 本橋さんへ：進め方はこれだけです
+## 進め方はこれだけです
 
 ### 手順 1 ― まず Muse に登録する
 📄 [01_muse_getting_started.pdf](01_muse_getting_started.pdf) を開いて、その通りに登録してください。
