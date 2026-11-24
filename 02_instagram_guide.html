@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="data:," />
+    <title>Instagram数値チェック スマホ用ガイド</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #f6f6f4;
+        --surface: #ffffff;
+        --surface-2: #efefec;
+        --ink: #1b1b1f;
+        --sub: #5a5a64;
+        --faint: #8a8a94;
+        --border: #e3e1dc;
+        --accent: #c92464;
+        --accent-ink: #a81c52;
+        --accent-soft: #fbe9f1;
+        --good: #17724a;
+        --good-soft: #e6f4ec;
+        --bad: #b3402a;
+        --bad-soft: #faece8;
+        --radius: 14px;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #131316;
+          --surface: #1e1e23;
+          --surface-2: #26262d;
+          --ink: #f2f2f4;
+          --sub: #b3b3bf;
+          --faint: #83838f;
+          --border: #34343d;
+          --accent: #ef6ba6;
+          --accent-ink: #f58ab9;
+          --accent-soft: #3a2230;
+          --good: #5cc48d;
+          --good-soft: #1d3228;
+          --bad: #ef8a72;
+          --bad-soft: #38231e;
+        }
+      }
+      * { box-sizing: border-box; }
+      html { -webkit-text-size-adjust: 100%; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+        font-size: 16px;
+        line-height: 1.75;
+      }
+      main { max-width: 680px; margin: 0 auto; padding: 28px 18px 56px; }
+      button, [role="button"], select, summary, input:not([type="checkbox"], [type="radio"]) { min-height: 2rem; }
+
+      h1 { font-size: 27px; line-height: 1.45; font-weight: 900; margin: 0 0 12px; letter-spacing: .01em; }
+      h2 { font-size: 20px; font-weight: 900; margin: 0 0 6px; line-height: 1.5; }
+      h3 { font-size: 16px; font-weight: 700; margin: 0 0 4px; }
+      p { margin: 0 0 12px; }
+      .lead { color: var(--sub); font-size: 15.5px; }
+      .sec { margin-top: 44px; }
+      .sec-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 14px; }
+      .sec-num {
+        flex: none; width: 30px; height: 30px; border-radius: 50%;
+        background: var(--accent); color: #fff; font-weight: 900; font-size: 15px;
+        display: inline-flex; align-items: center; justify-content: center;
+        transform: translateY(4px);
+      }
+      @media (prefers-color-scheme: dark) { .sec-num { color: #1b0d14; } }
+      .sec-head h2 { flex: 1; }
+      .sec-sub { color: var(--sub); font-size: 14.5px; margin: 0 0 14px; }
+
+      .card {
+        background: var(--surface); border: 1px solid var(--border);
+        border-radius: var(--radius); padding: 18px;
+      }
+      .card + .card { margin-top: 12px; }
+
+      /* steps */
+      .step { display: flex; gap: 14px; padding: 14px 0; }
+      .step + .step { border-top: 1px solid var(--border); }
+      .step:first-child { padding-top: 2px; }
+      .step:last-child { padding-bottom: 2px; }
+      .step-n {
+        flex: none; width: 26px; height: 26px; margin-top: 3px; border-radius: 50%;
+        border: 2px solid var(--accent); color: var(--accent-ink);
+        font-weight: 900; font-size: 14px; display: flex; align-items: center; justify-content: center;
+      }
+      .step-body { flex: 1; min-width: 0; }
+      .step-body p { color: var(--sub); font-size: 14.5px; margin: 0; }
+      .try {
+        margin-top: 10px; background: var(--surface-2); border-radius: 10px;
+        padding: 10px 14px; font-size: 14.5px; font-weight: 500;
+      }
+      .try span { color: var(--faint); font-size: 12.5px; display: block; font-weight: 400; }
+
+      /* form */
+      label.flabel { display: block; font-weight: 700; font-size: 14.5px; margin: 18px 0 6px; }
+      label.flabel:first-of-type { margin-top: 2px; }
+      .hint { color: var(--faint); font-size: 13px; margin: 4px 0 0; }
+      textarea, select {
+        width: 100%; font: inherit; font-size: 16px; color: var(--ink);
+        background: var(--surface); border: 1.5px solid var(--border); border-radius: 10px;
+        padding: 12px 14px;
+      }
+      textarea { resize: vertical; line-height: 1.6; }
+      textarea:focus, select:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: transparent; }
+      select { min-height: 48px; }
+      .btn {
+        display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+        width: 100%; min-height: 52px; padding: 12px 18px; margin-top: 20px;
+        border: none; border-radius: 12px; cursor: pointer;
+        background: var(--accent); color: #fff; font: inherit; font-weight: 700; font-size: 16px;
+      }
+      .btn:active { opacity: .85; }
+      @media (prefers-color-scheme: dark) { .btn { color: #1b0d14; } }
+      .btn.sub {
+        background: var(--surface); color: var(--accent-ink);
+        border: 1.5px solid var(--accent); margin-top: 10px; min-height: 48px; font-size: 15px;
+      }
+      .out-wrap { margin-top: 18px; display: none; }
+      .out-wrap.show { display: block; }
+      .out-wrap textarea { background: var(--surface-2); font-size: 14.5px; }
+      .copied { color: var(--good); font-size: 13.5px; font-weight: 700; margin-top: 8px; min-height: 1.4em; }
+
+      /* sample */
+      .acct-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+      .avatar {
+        flex: none; width: 46px; height: 46px; border-radius: 50%;
+        background: var(--accent-soft); color: var(--accent-ink);
+        display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 19px;
+      }
+      .acct-name { font-weight: 900; font-size: 17px; line-height: 1.3; }
+      .acct-meta { color: var(--faint); font-size: 13px; }
+      .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+      .stat { background: var(--surface-2); border-radius: 10px; padding: 12px 8px; text-align: center; }
+      .stat .v { font-size: 19px; font-weight: 900; font-variant-numeric: tabular-nums; line-height: 1.3; word-break: break-all; }
+      .stat .k { font-size: 12px; color: var(--sub); margin-top: 2px; }
+      .post-row { display: flex; gap: 12px; padding: 13px 0; border-top: 1px solid var(--border); margin-top: 14px; }
+      .post-row .when { flex: none; font-weight: 700; font-size: 14px; width: 74px; }
+      .post-nums { flex: 1; font-size: 14.5px; color: var(--sub); font-variant-numeric: tabular-nums; }
+      .post-nums b { color: var(--ink); }
+      .stamp { color: var(--faint); font-size: 12.5px; margin-top: 12px; }
+      table.trend { width: 100%; border-collapse: collapse; font-size: 14.5px; font-variant-numeric: tabular-nums; }
+      table.trend th, table.trend td { padding: 9px 6px; text-align: right; border-bottom: 1px solid var(--border); }
+      table.trend th:first-child, table.trend td:first-child { text-align: left; }
+      table.trend th { color: var(--sub); font-size: 12.5px; font-weight: 500; }
+      table.trend tr:last-child td { border-bottom: none; }
+      .dash { color: var(--faint); }
+
+      /* can / cannot */
+      .list { list-style: none; margin: 0; padding: 0; }
+      .list li { display: flex; gap: 10px; padding: 9px 0; font-size: 15px; align-items: flex-start; }
+      .list li + li { border-top: 1px solid var(--border); }
+      .list li:first-child { padding-top: 2px; }
+      .list li:last-child { padding-bottom: 2px; }
+      .ic { flex: none; width: 22px; height: 22px; margin-top: 3px; }
+      .card.can { border-top: 4px solid var(--good); }
+      .card.cannot { border-top: 4px solid var(--bad); }
+      .card.can h3 { color: var(--good); }
+      .card.cannot h3 { color: var(--bad); }
+      .note { color: var(--sub); font-size: 13.5px; margin-top: 10px; }
+
+      /* delivery options */
+      .opt {
+        width: 100%; text-align: left; font: inherit; color: var(--ink); cursor: pointer;
+        background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius);
+        padding: 16px 18px; display: block;
+      }
+      .opt + .opt { margin-top: 12px; }
+      .opt[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
+      .opt .t { font-weight: 900; font-size: 16.5px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+      .opt .pick { flex: none; font-size: 12px; font-weight: 700; color: var(--accent-ink); border: 1.5px solid var(--accent); border-radius: 999px; padding: 2px 10px; display: none; }
+      .opt[aria-pressed="true"] .pick { display: inline-block; }
+      .pm { margin: 10px 0 0; padding: 0; list-style: none; font-size: 14px; }
+      .pm li { display: flex; gap: 8px; padding: 3px 0; color: var(--sub); }
+      .pm .mark { flex: none; font-weight: 900; width: 18px; text-align: center; }
+      .pm .plus .mark { color: var(--good); }
+      .pm .minus .mark { color: var(--bad); }
+      .advice { margin-top: 16px; display: none; }
+      .advice.show { display: block; }
+      .advice .phrase {
+        background: var(--surface-2); border-radius: 10px; padding: 12px 14px;
+        font-size: 14.5px; font-weight: 500; margin-top: 8px;
+      }
+
+      /* tweaks */
+      .tweak { display: flex; gap: 12px; padding: 13px 0; }
+      .tweak + .tweak { border-top: 1px solid var(--border); }
+      .tweak:first-child { padding-top: 2px; }
+      .tweak:last-child { padding-bottom: 2px; }
+      .tweak .n { flex: none; font-weight: 900; color: var(--accent-ink); font-variant-numeric: tabular-nums; }
+      .tweak p { margin: 0; font-size: 15px; }
+      .tweak .say { color: var(--sub); font-size: 13.5px; }
+      footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--border); color: var(--faint); font-size: 13px; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Instagramの数値を、<br />スマホで見やすくチェック</h1>
+      <p class="lead">
+        他社・公開アカウントのフォロワー数や投稿への反応を、AIアシスタント「Muse」で取得して、
+        スマホで見やすい形に並べるためのガイドです。特別な道具や開発は不要で、
+        初回は<strong>「接続」</strong>と<strong>「対象アカウントを伝える」</strong>の2つだけで動き始めます。
+      </p>
+
+      <!-- 1. 接続 -->
+      <section class="sec">
+        <div class="sec-head"><span class="sec-num">1</span><h2>Instagramと接続する</h2></div>
+        <p class="sec-sub">最初に1回だけ。使うのはご自身のInstagramアカウントです。</p>
+        <div class="card">
+          <div class="step">
+            <div class="step-n">1</div>
+            <div class="step-body">
+              <h3>Museの連携設定を開く</h3>
+              <p>アプリの連携（コネクタ）一覧から「Instagram」を選びます。</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-n">2</div>
+            <div class="step-body">
+              <h3>自分のアカウントでログインして許可</h3>
+              <p>Metaアカウントセンター経由で、ご自身のInstagramアカウントを連携します。他人のアカウントや認証情報は使いません。</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-n">3</div>
+            <div class="step-body">
+              <h3>試しに聞いてみる</h3>
+              <p>数値が返ってくれば接続完了です。</p>
+              <div class="try"><span>試し文の例</span>「@instagram のフォロワー数を教えて」</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. 対象アカウント -->
+      <section class="sec">
+        <div class="sec-head"><span class="sec-num">2</span><h2>対象アカウントを伝える</h2></div>
+        <p class="sec-sub">見たいアカウント名を入れるだけで、Museへ送る依頼文ができます。あとはチャットに貼って送るだけです。</p>
+        <div class="card">
+          <label class="flabel" for="accounts">アカウント名（1行に1つ）</label>
+          <textarea id="accounts" rows="4" placeholder="例）&#10;instagram&#10;（@はあってもなくてもOKです）"></textarea>
+          <p class="hint">競合・同業など、チェックしたい公開アカウントを並べてください。</p>
+
+          <label class="flabel" for="postcount">見る投稿の数</label>
+          <select id="postcount">
+            <option value="10" selected>直近10件</option>
+            <option value="20">直近20件</option>
+            <option value="30">直近30件</option>
+          </select>
+
+          <label class="flabel" for="freq">取得の頻度</label>
+          <select id="freq">
+            <option value="once" selected>今回だけ取る</option>
+            <option value="weekly">週1回ペースで、推移も残したい</option>
+          </select>
+
+          <button class="btn" id="makeBtn" type="button">依頼文をつくる</button>
+
+          <div class="out-wrap" id="outWrap">
+            <label class="flabel" for="outText">Museへ送る依頼文</label>
+            <textarea id="outText" rows="9" readonly></textarea>
+            <button class="btn sub" id="copyBtn" type="button">依頼文をコピーする</button>
+            <p class="copied" id="copyMsg" aria-live="polite"></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. 見本 -->
+      <section class="sec">
+        <div class="sec-head"><span class="sec-num">3</span><h2>こんな形で数値が並びます</h2></div>
+        <p class="sec-sub">見本は、公式アカウント @instagram で実際に取得した数値です。</p>
+
+        <div class="card">
+          <div class="acct-head">
+            <div class="avatar">i</div>
+            <div>
+              <div class="acct-name">@instagram</div>
+              <div class="acct-meta">公式アカウント（認証済み）</div>
+            </div>
+          </div>
+          <div class="stats">
+            <div class="stat"><div class="v">685,041,524</div><div class="k">フォロワー</div></div>
+            <div class="stat"><div class="v">178</div><div class="k">フォロー中</div></div>
+            <div class="stat"><div class="v">8,657</div><div class="k">投稿数</div></div>
+          </div>
+          <div class="post-row">
+            <div class="when">11月20日<br />の投稿</div>
+            <div class="post-nums">
+              いいね <b>393,275</b> 件 ／ コメント <b>6,826</b> 件<br />
+              反応率（(いいね＋コメント)÷フォロワー数）＝ 約 <b>0.06%</b>
+            </div>
+          </div>
+          <p class="stamp">2026年11月24日 13:34 時点で取得した実測値です。対象アカウントが複数あれば、このカードがアカウントごとに並びます。</p>
+        </div>
+
+        <div class="card">
+          <h3>推移の見せ方（取得のたびに1行ずつ増えます）</h3>
+          <table class="trend">
+            <tr><th>取得日</th><th>フォロワー数</th><th>前回比</th></tr>
+            <tr><td>11月24日</td><td>685,041,524</td><td class="dash">―（初回）</td></tr>
+            <tr><td>次回取得時</td><td class="dash">―</td><td class="dash">―</td></tr>
+          </table>
+          <p class="note">同じアカウントを取り直すたびに履歴が積み上がり、フォロワーの増減が見えるようになります。</p>
+        </div>
+      </section>
+
+      <!-- 4. 取れる / 取れない -->
+      <section class="sec">
+        <div class="sec-head"><span class="sec-num">4</span><h2>取れる数値・取れない数値</h2></div>
+        <div class="card can">
+          <h3>取れるもの（公開情報）</h3>
+          <ul class="list">
+            <li><svg class="ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="var(--good-soft)"/><path d="M8 12.5l2.6 2.6L16 9.5" stroke="var(--good)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>フォロワー数・フォロー数・投稿数</span></li>
+            <li><svg class="ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="var(--good-soft)"/><path d="M8 12.5l2.6 2.6L16 9.5" stroke="var(--good)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>プロフィール（表示名・自己紹介・公式サイト・認証の有無）</span></li>
+            <li><svg class="ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="var(--good-soft)"/><path d="M8 12.5l2.6 2.6L16 9.5" stroke="var(--good)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>直近の投稿・リール一覧（日時・キャプション・投稿へのリンク）</span></li>
+            <li><svg class="ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="var(--good-soft)"/><path d="M8 12.5l2.6 2.6L16 9.5" stroke="var(--good)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>投稿ごとの いいね数・コメント数</span></li>
+            <li><svg class="ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="var(--good-soft)"/><path d="M8 12.5l2.6 2.6L16 9.5" stroke="var(--good)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>計算で出せるもの：反応率・平均いいね数・投稿頻度</span></li>
+          </ul>
+        </div>
+        <div class="card cannot">
+          <h3>取れないもの</h3>
+          <ul class="list">
+            <li><svg class="ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="var(--bad-soft)"/><path d="M9 9l6 6M15 9l-6 6" stroke="var(--bad)" stroke-width="2.2" stroke-linecap="round"/></svg><span>再生数・保存数・シェア数</span></li>
+            <li><svg class="ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="var(--bad-soft)"/><path d="M9 9l6 6M15 9l-6 6" stroke="var(--bad)" stroke-width="2.2" stroke-linecap="round"/></svg><span>届いた人数（リーチ）・プロフィール訪問数</span></li>
+            <li><svg class="ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="var(--bad-soft)"/><path d="M9 9l6 6M15 9l-6 6" stroke="var(--bad)" stroke-width="2.2" stroke-linecap="round"/></svg><span>フォロワーの年齢・性別・地域などの属性</span></li>
+            <li><svg class="ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="var(--bad-soft)"/><path d="M9 9l6 6M15 9l-6 6" stroke="var(--bad)" stroke-width="2.2" stroke-linecap="round"/></svg><span>非公開アカウントの投稿内容</span></li>
+          </ul>
+          <p class="note">これらはアカウントの持ち主だけが見られる数値で、Metaの公式APIでも他社の分は公開されていません。</p>
+        </div>
+      </section>
+
+      <!-- 5. 渡し方 -->
+      <section class="sec">
+        <div class="sec-head"><span class="sec-num">5</span><h2>数値の受け取り方を選ぶ</h2></div>
+        <p class="sec-sub">まとめた数値をどの形で受け取るか、3つの方法があります。タップすると、それぞれの進め方が表示されます。</p>
+
+        <button class="opt" type="button" data-opt="file" aria-pressed="false">
+          <span class="t">HTMLファイルで受け取る<span class="pick">選択中</span></span>
+          <ul class="pm">
+            <li class="plus"><span class="mark">＋</span><span>すぐ渡せる。追加の設定がいちばん少ない</span></li>
+            <li class="plus"><span class="mark">＋</span><span>スマホに保存すればオフラインでも開ける</span></li>
+            <li class="minus"><span class="mark">－</span><span>更新のたびに新しいファイルを受け取り直す</span></li>
+            <li class="minus"><span class="mark">－</span><span>URLでは共有できない</span></li>
+          </ul>
+        </button>
+
+        <button class="opt" type="button" data-opt="github" aria-pressed="false">
+          <span class="t">共有URLで見る（GitHub Pages）<span class="pick">選択中</span></span>
+          <ul class="pm">
+            <li class="plus"><span class="mark">＋</span><span>URLひとつでいつでも最新版が見られる</span></li>
+            <li class="plus"><span class="mark">＋</span><span>他の人にもリンクで共有できる／ホーム画面に追加できる</span></li>
+            <li class="minus"><span class="mark">－</span><span>公開ページになるため、URLを知っている人は誰でも見られる</span></li>
+            <li class="minus"><span class="mark">－</span><span>最初の公開設定が少し必要</span></li>
+          </ul>
+        </button>
+
+        <button class="opt" type="button" data-opt="space" aria-pressed="false">
+          <span class="t">Museのスペースで見る（自分だけ）<span class="pick">選択中</span></span>
+          <ul class="pm">
+            <li class="plus"><span class="mark">＋</span><span>自分だけが見られる。リンク管理が不要</span></li>
+            <li class="plus"><span class="mark">＋</span><span>Museアプリの中でそのまま開ける</span></li>
+            <li class="minus"><span class="mark">－</span><span>他の人には見せられない（共有には不向き）</span></li>
+            <li class="minus"><span class="mark">－</span><span>見るにはMuseのアカウントが必要</span></li>
+          </ul>
+        </button>
+
+        <div class="card advice" id="advice">
+          <h3 id="adviceTitle"></h3>
+          <p class="sec-sub" style="margin:0">この受け取り方で進める場合は、Museにこう伝えてください。</p>
+          <div class="phrase" id="advicePhrase"></div>
+          <button class="btn sub" id="adviceCopy" type="button">この一文をコピーする</button>
+          <p class="copied" id="adviceMsg" aria-live="polite"></p>
+        </div>
+      </section>
+
+      <!-- 6. 調整 -->
+      <section class="sec">
+        <div class="sec-head"><span class="sec-num">6</span><h2>あとから自分で調整できること</h2></div>
+        <p class="sec-sub">細かい調整は、どれもMuseに一言頼むだけです。初回は初期設定のままで問題ありません。</p>
+        <div class="card">
+          <div class="tweak"><div class="n">01</div><div><p>対象アカウントの追加・差し替え</p><p class="say">頼み方：「〇〇も追加して」「△△は外して」</p></div></div>
+          <div class="tweak"><div class="n">02</div><div><p>見る投稿の件数（直近10件／20件／30件など）</p><p class="say">頼み方：「直近20件までに広げて」</p></div></div>
+          <div class="tweak"><div class="n">03</div><div><p>並べる項目の増減（フォロワー数だけに絞る、反応率を付けるなど）</p><p class="say">頼み方：「フォロワー数と投稿数だけでいいよ」</p></div></div>
+          <div class="tweak"><div class="n">04</div><div><p>取得の頻度（頼んだときだけ／週1回の推移チェックなど）</p><p class="say">頼み方：「週1回、月曜に取り直して」</p></div></div>
+          <div class="tweak"><div class="n">05</div><div><p>アカウント同士の比較の見せ方（横並び比較、増減の大きい順など）</p><p class="say">頼み方：「フォロワーの伸び順に並べて」</p></div></div>
+        </div>
+      </section>
+
+      <footer>
+        このガイドで扱うのは、公開アカウントの公開情報のみです。数値は取得した時点のもので、その後も変動します。
+      </footer>
+    </main>
+
+    <script>
+      (function () {
+        var accountsEl = document.getElementById('accounts');
+        var postcountEl = document.getElementById('postcount');
+        var freqEl = document.getElementById('freq');
+        var outWrap = document.getElementById('outWrap');
+        var outText = document.getElementById('outText');
+        var copyMsg = document.getElementById('copyMsg');
+
+        function copyText(text, msgEl) {
+          function done() {
+            msgEl.textContent = 'コピーしました。Museのチャットに貼り付けて送ってください。';
+            setTimeout(function () { msgEl.textContent = ''; }, 4000);
+          }
+          function fallback() {
+            var ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            try { document.execCommand('copy'); done(); }
+            catch (e) { msgEl.textContent = 'コピーできませんでした。文面を長押しして手動でコピーしてください。'; }
+            document.body.removeChild(ta);
+          }
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(done, fallback);
+          } else {
+            fallback();
+          }
+        }
+
+        document.getElementById('makeBtn').addEventListener('click', function () {
+          var lines = accountsEl.value.split('\n').map(function (s) { return s.trim(); }).filter(function (s) { return s.length > 0; });
+          if (lines.length === 0) {
+            accountsEl.focus();
+            accountsEl.placeholder = 'まずアカウント名を1つ以上入れてください';
+            return;
+          }
+          var list = lines.map(function (s) {
+            var name = s.charAt(0) === '@' ? s : '@' + s;
+            return '・' + name;
+          }).join('\n');
+          var text = 'Instagramの数値チェックをお願いします。\n\n'
+            + '対象アカウント：\n' + list + '\n\n'
+            + '各アカウントについて、フォロワー数・フォロー数・投稿数と、直近' + postcountEl.value + '件の投稿（日時・いいね数・コメント数）を取得して、スマホで見やすい表にしてください。\n'
+            + 'あわせて、反応率（(いいね数＋コメント数)÷フォロワー数）も付けてください。';
+          if (freqEl.value === 'weekly') {
+            text += '\n\n頻度：週1回ペースで同じ数値を取り直して、前回との増減（フォロワー数の前回比など）も分かるようにしてください。';
+          } else {
+            text += '\n\n頻度：今回だけの取得でお願いします。';
+          }
+          outText.value = text;
+          outWrap.classList.add('show');
+          outWrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+
+        document.getElementById('copyBtn').addEventListener('click', function () {
+          copyText(outText.value, copyMsg);
+        });
+
+        var adviceData = {
+          file: {
+            title: 'HTMLファイルで受け取る場合',
+            phrase: '「結果はHTMLファイルでください。スマホで見やすいレイアウトでお願いします」'
+          },
+          github: {
+            title: '共有URL（GitHub Pages）で受け取る場合',
+            phrase: '「結果をGitHub Pagesで公開して、URLで見られるようにしてください」'
+          },
+          space: {
+            title: 'Museのスペースで受け取る場合',
+            phrase: '「結果はMuseのスペース（自分だけが見られるページ）で見られるようにしてください」'
+          }
+        };
+        var advice = document.getElementById('advice');
+        var adviceTitle = document.getElementById('adviceTitle');
+        var advicePhrase = document.getElementById('advicePhrase');
+        var adviceMsg = document.getElementById('adviceMsg');
+        var currentPhrase = '';
+
+        document.querySelectorAll('.opt').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            document.querySelectorAll('.opt').forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
+            btn.setAttribute('aria-pressed', 'true');
+            var d = adviceData[btn.getAttribute('data-opt')];
+            adviceTitle.textContent = d.title;
+            advicePhrase.textContent = d.phrase;
+            currentPhrase = d.phrase.replace(/[「」]/g, '');
+            adviceMsg.textContent = '';
+            advice.classList.add('show');
+            advice.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          });
+        });
+
+        document.getElementById('adviceCopy').addEventListener('click', function () {
+          if (currentPhrase) copyText(currentPhrase, adviceMsg);
+        });
+      })();
+    </script>
+  </body>
+</html>
